@@ -2,7 +2,6 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
-// app.use(express.json());
 // require('dotenv').config();
 
 const express = require('express');
@@ -14,7 +13,14 @@ app.use(cors());
 
 app.set('port', process.env.PORT || 3001);
 
-// const express = require('express');
+app.locals.project = [
+  {
+    name: 'Sally'
+  },
+  {
+    name: 'Lauren'
+  }
+]
 
 // app.use(express.json());
 
@@ -23,6 +29,12 @@ app.set('port', process.env.PORT || 3001);
 // });
 
 app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
+
+// POST and GET for 'project':
+
+app.get('/', (request, response) => {
+  response.status(200).json(app.locals.project);
+})
 
 
 //get for all projects
