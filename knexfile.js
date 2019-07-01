@@ -4,40 +4,25 @@ module.exports = {
 
   development: {
     client: 'pg',
-    connection: 'postgres://localhost/palette-picker',
-    useNullAsDefault: true
+    connection: 'postgres://localhost/palettepicker',
+    useNullAsDefault: true,
+      migrations: {
+        directory: './migrations'
+    },
+      seeds: {
+        directory: './seeds'
+      }
   },
 
-  // staging: {
-  //   client: 'postgresql',
-  //   connection: {
-  //     database: 'my_db',
-  //     user:     'username',
-  //     password: 'password'
-  //   },
-  //   pool: {
-  //     min: 2,
-  //     max: 10
-  //   },
-  //   migrations: {
-  //     tableName: 'knex_migrations'
-  //   }
-  // },
-
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
+  client: 'pg',
+  connection: process.env.DATABASE_URL + `?ssl=true`,
+  migrations: {
+    directory: './migrations'
+  },
+  seeds: {
+    directory: './seeds'
+  },
+  useNullAsDefault: true
   }
-
 };
