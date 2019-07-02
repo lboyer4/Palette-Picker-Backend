@@ -41,10 +41,10 @@ app.get('/', (request, response) => {
 // })
 
 
-//get for all projects
-//get for single projects
-//get for all palettes
-//get for single palette
+//get for all projects 
+//get for single projects /project/:id
+//get for all palettes /palettes
+//get for single palette /palettes/:id
 
 //post project
 //post palette
