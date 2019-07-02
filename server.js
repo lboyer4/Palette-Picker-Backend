@@ -6,42 +6,35 @@ const database = require('knex')(configuration);
 
 const express = require('express');
 const app = express();
-
 const cors = require('cors');
-
 app.use(cors());
 
+
 app.set('port', process.env.PORT || 3001);
-
-app.locals.projects = [
-  {
-    name: 'Sally'
-  },
-  {
-    name: 'Lauren'
-  }
-]
-
-// app.use(express.json());
-
-// app.listen(process.env.PORT || port, () => {
-//   console.log(`App is running 😃 on ${port}`)
-// });
-
 app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
 
-// POST and GET for 'project':
+// app.locals.projects = [
+//   {
+//     name: 'Sally'
+//   },
+//   {
+//     name: 'Lauren'
+//   }
+// ]
 
-app.get('/', (request, response) => {
-  response.status(200).json(app.locals.projects);
-})
+//get for all projects and all palettes:
 
-// app.post('/', (request, response) => {
-//   response.status(200).json(app.locals.projects)
-// })
+app.get('/', (request,response) => {
+  database('project').select()
+  .then(project => {
+    return response.status(200).json(project);
+  })
+  .catch(error => {
+    return response.status(500).json({ error });
+  })
+});
 
 
-//get for all projects 
 //get for single projects /project/:id
 //get for all palettes /palettes
 //get for single palette /palettes/:id
