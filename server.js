@@ -13,7 +13,7 @@ app.use(cors());
 
 app.set('port', process.env.PORT || 3001);
 
-app.locals.project = [
+app.locals.projects = [
   {
     name: 'Sally'
   },
@@ -33,8 +33,12 @@ app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app
 // POST and GET for 'project':
 
 app.get('/', (request, response) => {
-  response.status(200).json(app.locals.project);
+  response.status(200).json(app.locals.projects);
 })
+
+// app.post('/', (request, response) => {
+//   response.status(200).json(app.locals.projects)
+// })
 
 
 //get for all projects
