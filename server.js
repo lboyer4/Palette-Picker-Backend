@@ -131,7 +131,15 @@ app.put('/api/v1/project/:id', (request, response) => {
     }
 })
 
-
+app.put('/api/v1/palettes/:id', (request, response) => {
+  const updatedPaletteId = request.params.id
+  const updatedColor = request.body.color_1
+  database('palettes').where('id', updatedPaletteId).update('color_1', updatedColor)
+    .then(response.status(200).json(`Successfully updated color with ${updatedColor}`))
+    if(!updatedColor) {
+      return response.status(404).json({error: `Couldn't find project with the name ${updatedColor}`})
+    }
+})
 
 
 
