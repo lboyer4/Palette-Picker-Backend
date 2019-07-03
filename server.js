@@ -96,3 +96,25 @@ app.post('/api/v1/project', (request, response) => {
     });
 });
 
+//post endpoint for palettes table 
+
+app.post('/api/v1/palettes', (request, response) => {
+  let palette = request.body
+  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
+    if (!palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: 
+          `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.` 
+        });
+    }
+  }
+
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      response.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+});
