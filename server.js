@@ -13,6 +13,8 @@ app.set('port', process.env.PORT || 3001);
 
 app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
 
+//get endpoint for ALL resources on each table:
+
 app.get('/api/v1/project', (request, response) => {
   database('project').select()
   .then(project => {
@@ -22,6 +24,18 @@ app.get('/api/v1/project', (request, response) => {
     return response.status(500).json({ error });
   })
 });
+
+app.get('/api/v1/palettes', (request, response) => {
+  database('palettes').select()
+  .then(palette => {
+    return response.status(200).json(palette);
+  })
+  .catch(error => {
+    return response.status(500).json({ error })
+  })
+});
+
+//get for single projects /project/:id
 
 app.get('/api/v1/project/:id', (request, response) => {
   database('project').where('id', request.params.id)
@@ -38,7 +52,7 @@ app.get('/api/v1/project/:id', (request, response) => {
   })
 });
 
-//get for single projects /project/:id
+
 //get for all palettes /palettes
 //get for single palette /palettes/:id
 
