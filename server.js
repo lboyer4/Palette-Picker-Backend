@@ -141,5 +141,23 @@ app.put('/api/v1/palettes/:id', (request, response) => {
     }
 })
 
+//DELETE a palette
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('id', request.params.id).del()
+    .then(result => {
+      if (result > 0) {
+        response.status(200).json(`Deleted palette '${request.body.palettes}' with id ${request.params.id}`)
+      } else {
+        response.status(404).json({
+          error: `Could not find palette with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+ });
+
 
 
