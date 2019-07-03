@@ -183,5 +183,3 @@ app.delete('/api/v1/project/:id', (request, response) => {
     });
  });
 
-
-
