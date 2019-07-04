@@ -44,5 +44,16 @@ describe('Server', () => {
 		//execution: create var. of response and assign to await request(app).post('/project).send(newProject), create var. of the response body id, create var. of project and await the project DB where the ids match and grab the first one .first()
 		//expectation: expect newProject.name  to equal project.name
 
+		//PUT /project/:id:
+
+	//200 status code: it should return 200 status, async, create variable of response and await the request from app to get the project DB, expect response.status to be 200
+
+	//404 status code: it should return 404 status, async, create variable of response and await the request from app to get the project DB with project id that is not found, expect response.status to be 404
+
+	//create describe block for /project/:id, it should update the current project with new info provided by user, async
+		//setup: create var. updatedProject assign to await project DB and grab the first one .first(), create id var. and assign to updatedProject.id
+		//execution: create response and assign to await the request(app).put(`/project/${id}`).send(updatedProject), create project var. and assign to await the project DB.where({ id: id }).first()
+		//expectation: expect updatedProject to equal project
+
 
 	
