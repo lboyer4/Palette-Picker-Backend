@@ -35,5 +35,12 @@ describe('Server', () => {
 		//execution: create var. for response and await request(app).get(`/project/${id}`), create var. for project and assign to response body
 		//expectation: expect project to equal the expectedProject
 
+			//POST /project:
+
+	//create describe block for POST /project, it should post a new project to the DB, async
+		//setup: create var. newProject assign to {name: "Project 500"}
+		//execution: create var. of response and assign to await request(app).post('/project).send(newProject), create var. of the response body id, create var. of project and await the project DB where the ids match and grab the first one .first()
+		//expectation: expect newProject.name  to equal project.name
+
 
 	
