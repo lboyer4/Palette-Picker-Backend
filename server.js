@@ -47,9 +47,9 @@ app.get('/api/v1/project/:id', (request, response) => {
   .select()
   .then(project => {
     if(project.length) {
-      return response.status(200).json(project)
+      return response.status(200).json(project);
     } else {
-      return response.status(404).json({ error: `Couldn't find project with id: ${request.params.id}` })
+      return response.status(404).json({ error: `Couldn't find project with id: ${request.params.id}` });
     }
   })
   .catch(error => {
@@ -63,9 +63,9 @@ app.get('/api/v1/palettes/:id', (request, response) => {
   database('palettes').where('id', request.params.id).select()
   .then(palette => {
     if(palette.length) {
-      return response.status(200).json(palette)
+      return response.status(200).json(palette);
     } else {
-      return response.status(404).json({ error: `Couldn't find palette with id: ${request.params.id }`})
+      return response.status(404).json({ error: `Couldn't find palette with id: ${request.params.id }`});
     }
   })
   .catch(error => {
@@ -76,7 +76,7 @@ app.get('/api/v1/palettes/:id', (request, response) => {
 //post endpoint for project table
 
 app.post('/api/v1/project', (request, response) => {
-  let project = request.body
+  const project = request.body;
   for (let requiredParameter of ['name']) {
     if (!project[requiredParameter]) {
       return response
@@ -89,10 +89,10 @@ app.post('/api/v1/project', (request, response) => {
 
   database('project').insert(project, 'id')
     .then(project => {
-      response.status(201).json({ id: project[0] })
+      response.status(201).json({ id: project[0] });
     })
     .catch(error => {
-      response.status(500).json({ error })
+      response.status(500).json({ error });
     });
 });
 
@@ -122,30 +122,31 @@ app.post('/api/v1/palettes', (request, response) => {
 //put endpoint for changing project
 
 app.put('/api/v1/project/:id', (request, response) => {
-  const updatedProjectId = request.params.id
-  const updatedName = request.body.name
+  const updatedProjectId = request.params.id;
+  const updatedName = request.body.name;
   database('project').where('id', updatedProjectId).update('name', updatedName)
     .then(response.status(200).json(`Successfully updated name with ${updatedName}`))
-    if(!updatedName) {
-      return response.status(404).json({error: `Couldn't find project with the name ${updatedName}`})
-    }
-})
+  if (!updatedName) {
+    return response.status(404).json({error: `Couldn't find project with the name ${updatedName}`});
+  }
+});
 
+//put endpoint for changing palette
 
 app.put('/api/v1/palettes/:id', (request, response) => {
-  const updatedPaletteId = request.params.id
-  const updatedPalette = request.body
+  const updatedPaletteId = request.params.id;
+  const updatedPalette = request.body;
   for(let requiredParameter of Object.keys(updatedPalette)) {
     if(!updatedPalette[requiredParameter]) {
-      return response.status(404).json({error: `Couldn't find palette parameter of ${requiredParameter}`})
+      return response.status(404).json({error: `Couldn't find palette parameter of ${requiredParameter}`});
     }
   }
   database('palettes').where('id', updatedPaletteId).update({...updatedPalette, id: updatedPaletteId})
-    .then(response.status(200).json(`Successfully updated palette`))
-    // if(!updatedPalette) {
-    //   return response.status(404).json({error: `Couldn't find project with the name ${updatedPalette}`})
-    // }
-})
+    .then(response.status(200).json(`Successfully updated palette`));
+});
+
+
+
 
 //DELETE a palette
 
@@ -182,4 +183,7 @@ app.delete('/api/v1/project/:id', (request, response) => {
       response.status(500).json({ error })
     });
  });
+
+
+
 
