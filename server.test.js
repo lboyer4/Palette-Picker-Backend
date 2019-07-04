@@ -55,5 +55,18 @@ describe('Server', () => {
 		//execution: create response and assign to await the request(app).put(`/project/${id}`).send(updatedProject), create project var. and assign to await the project DB.where({ id: id }).first()
 		//expectation: expect updatedProject to equal project
 
+	//DELETE /project/:id:
+
+	//200 status code: it should return 200 status, async, create variable of response and await the request from app to get the project DB, expect response.status to be 200
+
+	//404 status code: it should return 404 status, async, create variable of response and await the request from app to get the project DB with project id that is not found, expect response.status to be 404
+
+	//500 status code: it should return 500 status if there is an internal server error, async, create variable of response and await the request from app to get project DB, expect response.status toBe 500
+
+	//describe DELETE /project/:id, it should delete the project from DB, async
+	//setup: create var. of project and assign to await project DB and grab the first one .first(), create var. for id and assign to project.id
+	//execution: create var. for response and assign to await request(app).delete(`/project/${id}`), create var for deletedProject and assign to await project DB where({ id: id }).first()
+	//expectation: expect the deletedProject to equal undefined (because it was deleted)
+
 
 	
