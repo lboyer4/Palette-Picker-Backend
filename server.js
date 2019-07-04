@@ -131,6 +131,7 @@ app.put('/api/v1/project/:id', (request, response) => {
     }
 })
 
+//put endpoint for changing palettes
 
 app.put('/api/v1/palettes/:id', (request, response) => {
   const updatedPaletteId = request.params.id
@@ -182,6 +183,4 @@ app.delete('/api/v1/project/:id', (request, response) => {
       response.status(500).json({ error })
     });
  });
-
-
 
