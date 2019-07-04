@@ -37,6 +37,8 @@ describe('Server', () => {
 
 			//POST /project:
 
+	//422 status code: it should return 422 status if there is an unprocessable entity error, async, create variable of response and await the request from app to get project DB, expect response.status toBe 422
+
 	//create describe block for POST /project, it should post a new project to the DB, async
 		//setup: create var. newProject assign to {name: "Project 500"}
 		//execution: create var. of response and assign to await request(app).post('/project).send(newProject), create var. of the response body id, create var. of project and await the project DB where the ids match and grab the first one .first()
