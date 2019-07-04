@@ -87,6 +87,7 @@ app.post('/api/v1/project', (request, response) => {
     }
   }
 
+
   database('project').insert(project, 'id')
     .then(project => {
       response.status(201).json({ id: project[0] })
@@ -118,7 +119,6 @@ app.post('/api/v1/palettes', (request, response) => {
       response.status(500).json({ error })
     });
 });
-
 //put endpoint for changing project
 
 app.put('/api/v1/project/:id', (request, response) => {
@@ -142,6 +142,7 @@ app.put('/api/v1/palettes/:id', (request, response) => {
       return response.status(404).json({error: `Couldn't find project with the name ${updatedColor}`})
     }
 })
+
 
 
 
