@@ -6,6 +6,9 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
 // app.use(express.json());
 // require('dotenv').config();
 
@@ -70,11 +73,48 @@ app.get('/api/v1/palettes/:id', (request, response) => {
   })
 });
 
-//post project
-//post palette
+//post endpoint for project table
 
-//change a palette
-//change a project
+app.post('/api/v1/project', (request, response) => {
+  let project = request.body
+  for (let requiredParameter of ['name']) {
+    if (!project[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: 
+          `Expected format: { name: <String> } You're missing "${requiredParameter}" property.` 
+        });
+    }
+  }
 
-//delete a palette
-//delete a project
+  database('project').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+});
+
+//post endpoint for palettes table 
+
+app.post('/api/v1/palettes', (request, response) => {
+  let palette = request.body
+  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
+    if (!palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: 
+          `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.` 
+        });
+    }
+  }
+
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      response.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+});
