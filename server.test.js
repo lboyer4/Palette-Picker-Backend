@@ -24,10 +24,16 @@ describe('Server', () => {
 
 	//GET /project/:id:
 
+	//200 status code: it should return 200 status, async, create variable of response and await the request from app to get the project DB, expect response.status to be 200
+
+	//404 status code: it should return 404 status, async, create variable of response and await the request from app to get the project DB with project id that is not found, expect response.status to be 404
+
+	//500 status code: it should return 500 status if there is an internal server error, async, create variable of response and await the request from app to get project DB, expect response.status toBe 500
+
 	//create describe block for GET /project/:id, should return a single project, async
 		//setup: create variable of expectedProject assign to await the project DB and grab the first one .first(), create variable for id and assign to expectedProject.id
 		//execution: create var. for response and await request(app).get(`/project/${id}`), create var. for project and assign to response body
 		//expectation: expect project to equal the expectedProject
 
-		
+
 	
