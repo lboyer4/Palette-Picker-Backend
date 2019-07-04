@@ -21,4 +21,13 @@ describe('Server', () => {
 	//setup: create variable for expectedProject and assign to await the database of project that is selected
 	//execution: create variable for response that awaits the request from app to get the project DB, create variable of project assigned to response.body
 	//expectation: expect project response.body to equal expectedProject
+
+	//GET /project/:id:
+
+	//create describe block for GET /project/:id, should return a single project, async
+		//setup: create variable of expectedProject assign to await the project DB and grab the first one .first(), create variable for id and assign to expectedProject.id
+		//execution: create var. for response and await request(app).get(`/project/${id}`), create var. for project and assign to response body
+		//expectation: expect project to equal the expectedProject
+
+		
 	
