@@ -6,9 +6,17 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 describe('Server', () => {
-	it('should have', () => {
-
+	beforeEach(async () => {
+		await database.seed.run()
 	})
+	describe('init', () => {
+		it('should return a 200 status', async () => {
+			const response = await request(server).get('/')
+			expect(response.status).toBe(200)
+		})
+	})
+
+
 })
 
 //GET /project:
