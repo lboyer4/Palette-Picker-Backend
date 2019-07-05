@@ -152,4 +152,28 @@ describe('PUT /api/v1/palettes/:id', () => {
 		//a 404 status will be returned with an error message
 	});
 });
+
+describe('DELETE /api/v1/palettes/:id', () => {
+	it('should return a 200 status with a deleted message', () {
+		//setup
+		//it should declare the id of the request
+
+		//execution 
+		//should search the database for a matching id
+
+		//expected 
+		//a 200 status will be returned with a message telling you which palette was deleted
+	}
+	
+		it('should return a 404 status with an error message', () {
+		//setup
+		//it should declare the id of the request
+
+		//execution 
+		//should search the database for a matching id
+
+		//expected 
+		//a 404 status will be returned with an error message
+	})
+})
 	
