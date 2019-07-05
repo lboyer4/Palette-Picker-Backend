@@ -87,7 +87,6 @@ app.post('/api/v1/project', (request, response) => {
     }
   }
 
-
   database('project').insert(project, 'id')
     .then(project => {
       response.status(201).json({ id: project[0] });
@@ -102,7 +101,7 @@ app.post('/api/v1/project', (request, response) => {
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body
   for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
-    if (!palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter] && !palette[requiredParameter]) {
+    if (!palette[requiredParameter]) {
       return response
         .status(422)
         .send({ error: 
@@ -119,30 +118,79 @@ app.post('/api/v1/palettes', (request, response) => {
       response.status(500).json({ error })
     });
 });
+
 //put endpoint for changing project
 
 app.put('/api/v1/project/:id', (request, response) => {
-  const updatedProjectId = request.params.id;
-  const updatedName = request.body.name;
-  database('project').where('id', updatedProjectId).update('name', updatedName)
-    .then(response.status(200).json(`Successfully updated name with ${updatedName}`))
-  if (!updatedName) {
-    return response.status(404).json({error: `Couldn't find project with the name ${updatedName}`});
-  }
-});
+  const { id } = request.params;
+  const { name } = request.body;
 
-//put endpoint for changing palettes
+  database('project')
+  .where({ id })
+  .update({ name }, ['id'])
+  .then((id) => {
+    if (!id.length) {
+      response.status(404).json({ 
+        error: 'Couldn\'t update: Project does not exist' 
+      });
+    } else response.sendStatus(200);
+  })
+  .catch(error => response.status(500).json({ error }))  
+})
+
+//put endpoint for changing palette
 
 app.put('/api/v1/palettes/:id', (request, response) => {
-  const updatedPaletteId = request.params.id;
-  const updatedColor = request.body.color_1;
-  database('palettes').where('id', updatedPaletteId).update('color_1', updatedColor)
-    .then(response.status(200).json(`Successfully updated color with ${updatedColor}`))
-  if (!updatedColor) {
-    return response.status(404).json({error: `Couldn't find project with the name ${updatedColor}`});
-  }
-});
+  const { id } = request.params;
+  const updatedPalette = request.body;
 
+  database('palettes')
+  .where({ id })
+  .update({ ...updatedPalette }, ['id'])
+  .then((id) => {
+    if (!id.length) {
+      response.status(404).json({ 
+        error: 'Couldn\'t update: Palette does not exist' 
+      });
+    } else response.sendStatus(200);
+  })
+  .catch(error => response.status(500).json({ error }))  
+})
 
+//DELETE a palette
+
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('id', request.params.id).del()
+    .then(result => {
+      if (result > 0) {
+        response.status(200).json(`Deleted palette ${request.body.palettes} with id ${request.params.id}`)
+      } else {
+        response.status(404).json({
+          error: `Could not find palette with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+ });
+
+ //DELETE a project
+
+app.delete('/api/v1/project/:id', (request, response) => {
+  database('project').where('id', request.params.id).del()
+    .then(result => {
+      if (result > 0) {
+        response.status(200).json(`Deleted project ${request.body.project} with id ${request.params.id}`)
+      } else {
+        response.status(404).json({
+          error: `Could not find project with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    });
+ });
 
 
