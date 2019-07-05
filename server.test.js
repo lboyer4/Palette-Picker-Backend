@@ -126,4 +126,30 @@ describe('POST /api/v1/palettes', () {
     //      `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.
 	});
 });
+
+describe('PUT /api/v1/palettes/:id', () => {
+	it('should return a 200 status if request has a matching id', () {
+		//setup
+		//it should declare the id of the request
+		//should declare the body of the request as updated palette
+
+		//execution 
+		//should search in the database for a palette with the matching id of the request and update that palette
+
+		//expected 
+		//a 200 status
+	});
+
+		it('should return a 404 status if request has no matching id', () {
+		//setup
+		//it should declare the id of the request
+		//should declare the body of the request as updated palette
+
+		//execution 
+		//should search the database for a matching id
+
+		//expected 
+		//a 404 status will be returned with an error message
+	});
+});
 	
