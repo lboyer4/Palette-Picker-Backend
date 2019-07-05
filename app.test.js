@@ -1,5 +1,6 @@
-const server = require('./server');
+const app = require('./app');
 const request = require('supertest');
+const bodyParser = require("body-parser")
 
 const environment = process.env.NODE_ENV || 'test'
 const configuration = require('./knexfile')[environment]
@@ -11,26 +12,33 @@ describe('Server', () => {
 	})
 	describe('init', () => {
 		it('should return a 200 status', async () => {
-			const response = await request(server).get('/')
+			const response = await request(app).get('/')
 			expect(response.status).toBe(200)
 		})
 	})
 
+	//GET /project:
 
+	describe('GET /project', () => {
+		it('should return all of the projects in the project DB', async () => {
+
+			//setup
+			const expectedProject = await database('project').select()
+      expectedProject.forEach(project => {
+        project.created_at = project.created_at.toJSON()
+        project.updated_at = project.updated_at.toJSON()
+      })
+
+			//execution
+			const response = await request(app).get('/api/v1/project')
+			const project = response.body
+
+			//expectation
+			expect(project).toEqual(expectedProject)
+		})
+	})
 })
 
-//GET /project:
-
-//200 status code: it should return 200 status, async, create variable of response and await the request from app to get the project DB, expect response.status to be 200
-
-//500 status code: it should return 500 status if there is an internal server error, async, create variable of response and await the request from app to get project DB, expect response.status toBe 500
-
-//create describe block for GET /project, should return every project in the DB, async
-	//setup: create variable for expectedProject and assign to await the database of project that is selected
-	//execution: create variable for response that awaits the request from app to get the project DB, create variable of project assigned to response.body
-	//expectation: expect project response.body to equal expectedProject
-
-	//GET /project/:id:
 
 	//200 status code: it should return 200 status, async, create variable of response and await the request from app to get the project DB, expect response.status to be 200
 
@@ -75,6 +83,3 @@ describe('Server', () => {
 	//setup: create var. of project and assign to await project DB and grab the first one .first(), create var. for id and assign to project.id
 	//execution: create var. for response and assign to await request(app).delete(`/project/${id}`), create var for deletedProject and assign to await project DB where({ id: id }).first()
 	//expectation: expect the deletedProject to equal undefined (because it was deleted)
-
-
-	
