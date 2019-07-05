@@ -125,7 +125,7 @@ app.post('/api/v1/palettes', (request, response) => {
 
 //put endpoint for changing project
 
-app.put('/api/v1/project/:id', (request, response) => {
+app.put('/api/v1/project/:id', async (request, response) => {
   const { id } = request.params;
   const { name } = request.body;
 
