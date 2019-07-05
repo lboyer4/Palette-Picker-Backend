@@ -124,11 +124,13 @@ app.post('/api/v1/palettes', (request, response) => {
 app.put('/api/v1/project/:id', (request, response) => {
   const updatedProjectId = request.params.id
   const updatedName = request.body.name
+  for(let requiredParameter of updatedName) {
+    if(!updatedName[requiredParameter] === '') {
+      return response.status(404).json({error: `Couldn't find project with name ${updatedName}`})
+    }
+  }
   database('project').where('id', updatedProjectId).update('name', updatedName)
     .then(response.status(200).json(`Successfully updated name with ${updatedName}`))
-    if(!updatedName) {
-      return response.status(404).json({error: `Couldn't find project with the name ${updatedName}`})
-    }
 })
 
 
@@ -136,7 +138,7 @@ app.put('/api/v1/palettes/:id', (request, response) => {
   const updatedPaletteId = request.params.id
   const updatedPalette = request.body
   for(let requiredParameter of Object.keys(updatedPalette)) {
-    if(!updatedPalette[requiredParameter]) {
+    if(!updatedPalette[requiredParameter] === '') {
       return response.status(404).json({error: `Couldn't find palette parameter of ${requiredParameter}`})
     }
   }
