@@ -35,9 +35,9 @@ app.get('/api/v1/project', (request, response) => {
 //get endpoint for ALL resources on palettes table
 
 app.get('/api/v1/palettes', (request, response) => {
-  database('palettes').select()
   .then(palette => {
     return response.status(200).json(palette);
+  database('palettes').select()
   })
   .catch(error => {
     return response.status(500).json({ error })
@@ -51,7 +51,8 @@ app.get('/api/v1/project/:id', (request, response) => {
   .select()
   .then(project => {
     if(project.length) {
-      return response.status(200).json(project);
+      return response.status(200).json(
+project);
     } else {
       return response.status(404).json({ error: `Couldn't find project with id: ${request.params.id}` });
     }
@@ -60,7 +61,6 @@ app.get('/api/v1/project/:id', (request, response) => {
     return response.status(500).json({ error });
   })
 });
-
 //get for single palette /palettes/:id
 
 app.get('/api/v1/palettes/:id', (request, response) => {

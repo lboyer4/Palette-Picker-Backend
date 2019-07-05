@@ -82,4 +82,18 @@ describe('GET /api/v1/palettes', () {
 	})
 })
 
+describe('GET /api/v1/palettes:id', () {
+	it('should return a palette with an id that matches the params id', () => {
+		//set up 
+		// it should grab the first palette from the database
+		//the id should = the palette id
+
+		//execution
+		//should declare the palettes 
+		//declare result should take the first palette from the response body
+
+		//expectation
+		//expected the result to be the palette with th matching id of the palette 
+	})
+})
 	
