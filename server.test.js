@@ -1,9 +1,9 @@
-// import request from 'supertest'
-// import app from './app'
+const server = require('./server');
+const request = require('supertest');
 
-// const environment = process.env.NODE_ENV || 'test'
-// const configuration = require('./knexfile')[environment]
-// const database = require('knex')(configuration)
+const environment = process.env.NODE_ENV || 'test'
+const configuration = require('./knexfile')[environment]
+const database = require('knex')(configuration)
 
 describe('Server', () => {
 	it('should have', () => {
