@@ -94,6 +94,36 @@ describe('GET /api/v1/palettes:id', () {
 
 		//expectation
 		//expected the result to be the palette with th matching id of the palette 
-	})
-})
+	});
+});
+
+describe('POST /api/v1/palettes', () {
+	it('should post a palette to the palettes database', () {
+		//setup
+		//it should declare the palette
+
+		//execution 
+		//result should be declared with the palette posted
+		//palettes should be declared as all the palettes in the database
+
+		//expected 
+		//a 200 reponse
+		//the palette color to be the same as the new palette
+	});
+
+		it('should return an error if a not all required parameters are met', () {
+		//setup
+		//it should declare the palette
+
+		//execution 
+		//result should be declared with the palette posted
+		//palettes should be declared as all the palettes in the database
+
+		//expected 
+		//an error status 
+		//a error message
+		//error: 
+    //      `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.
+	});
+});
 	
