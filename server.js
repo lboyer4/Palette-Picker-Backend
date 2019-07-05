@@ -122,31 +122,39 @@ app.post('/api/v1/palettes', (request, response) => {
 //put endpoint for changing project
 
 app.put('/api/v1/project/:id', (request, response) => {
-  const updatedProjectId = request.params.id
-  const updatedName = request.body.name
-  for(let requiredParameter of updatedName) {
-    if(!updatedName[requiredParameter] === '') {
-      return response.status(404).json({error: `Couldn't find project with name ${updatedName}`})
-    }
-  }
-  database('project').where('id', updatedProjectId).update('name', updatedName)
-    .then(response.status(200).json(`Successfully updated name with ${updatedName}`))
+  const { id } = request.params;
+  const { name } = request.body;
+
+  database('project')
+  .where({ id })
+  .update({ name }, ['id'])
+  .then((id) => {
+    if (!id.length) {
+      response.status(404).json({ 
+        error: 'Couldn\'t update: Project does not exist' 
+      });
+    } else response.sendStatus(200);
+  })
+  .catch(error => response.status(500).json({ error }))  
 })
 
+//put endpoint for changing palette
 
 app.put('/api/v1/palettes/:id', (request, response) => {
-  const updatedPaletteId = request.params.id
-  const updatedPalette = request.body
-  for(let requiredParameter of Object.keys(updatedPalette)) {
-    if(!updatedPalette[requiredParameter] === '') {
-      return response.status(404).json({error: `Couldn't find palette parameter of ${requiredParameter}`})
-    }
-  }
-  database('palettes').where('id', updatedPaletteId).update({...updatedPalette, id: updatedPaletteId})
-    .then(response.status(200).json(`Successfully updated palette`))
-    // if(!updatedPalette) {
-    //   return response.status(404).json({error: `Couldn't find project with the name ${updatedPalette}`})
-    // }
+  const { id } = request.params;
+  const updatedPalette = request.body;
+
+  database('palettes')
+  .where({ id })
+  .update({ ...updatedPalette }, ['id'])
+  .then((id) => {
+    if (!id.length) {
+      response.status(404).json({ 
+        error: 'Couldn\'t update: Palette does not exist' 
+      });
+    } else response.sendStatus(200);
+  })
+  .catch(error => response.status(500).json({ error }))  
 })
 
 //DELETE a palette
