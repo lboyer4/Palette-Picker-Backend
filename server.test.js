@@ -68,5 +68,18 @@ describe('Server', () => {
 	//execution: create var. for response and assign to await request(app).delete(`/project/${id}`), create var for deletedProject and assign to await project DB where({ id: id }).first()
 	//expectation: expect the deletedProject to equal undefined (because it was deleted)
 
+describe('GET /api/v1/palettes', () {
+	it('should return all palettes', () => {
+		//set up 
+		// it should declare expectedPalettes with the palettes database
+
+		//execution
+		//should declare the response with palettes
+		//all the palettes with be the response body
+
+		//expectation
+		//expected palettes to equal expectedPalettes
+	})
+})
 
 	
