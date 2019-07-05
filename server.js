@@ -144,9 +144,6 @@ app.put('/api/v1/palettes/:id', (request, response) => {
   }
   database('palettes').where('id', updatedPaletteId).update({...updatedPalette, id: updatedPaletteId})
     .then(response.status(200).json(`Successfully updated palette`))
-    // if(!updatedPalette) {
-    //   return response.status(404).json({error: `Couldn't find project with the name ${updatedPalette}`})
-    // }
 })
 
 //DELETE a palette
@@ -184,6 +181,3 @@ app.delete('/api/v1/project/:id', (request, response) => {
       response.status(500).json({ error })
     });
  });
-
-
-
