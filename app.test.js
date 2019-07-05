@@ -7,9 +7,17 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 describe('Server', () => {
+	const convertDate = data => {
+		return data.map(pro => {
+			pro.updated_at = pro.updated_at.toJSON();
+			pro.created_at = pro.created_at.toJSON();
+			return pro;
+		});
+	}
+
 	beforeEach(async () => {
 		await database.seed.run()
-	})
+	});
 	describe('init', () => {
 		it('should return a 200 status', async () => {
 			const response = await request(app).get('/')
@@ -19,24 +27,36 @@ describe('Server', () => {
 
 	//GET /project:
 
-	describe('GET /project', () => {
-		it('should return all of the projects in the project DB', async () => {
+	describe('GET /api/v1/projects', () => {
+		it('should return all projects in the db project table if they exist', async () => {
+			const expectedProject = await database('project').select().then(proj => convertDate(proj));
 
-			//setup
-			const expectedProject = await database('project').select()
-      expectedProject.forEach(project => {
-        project.created_at = project.created_at.toJSON()
-        project.updated_at = project.updated_at.toJSON()
-      })
+			const response = await request(app).get('/api/v1/project');
+			const result = response.body;
 
-			//execution
-			const response = await request(app).get('/api/v1/project')
-			const project = response.body
+			expect(result).toEqual(expectedProject);
+    });
 
-			//expectation
-			expect(project).toEqual(expectedProject)
+		//GET /project/:id:
+
+		describe('GET /project/:id', () => {
+			it.skip('should return a single project with the id in the params', async () => {
+				//setup
+				const expectedProject = await database('project').first()
+				expectedProject.created_at = expectedProject.created_at.toJSON()
+			expectedProject.updated_at = expectedProject.updated_at.toJSON()
+			
+				const id = expectedProject.id
+	
+				//execution
+				const response = await request(app).get(`/api/v1/project/${id}`)
+				const project = response.body
+	
+				//expectation
+				expect(project).toEqual(expectedProject)
 		})
 	})
+})
 })
 
 
