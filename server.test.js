@@ -100,6 +100,14 @@ describe('Server', () => {
 
 			expect(palette).toEqual(expectedPalette);
 		});
+
+		it('should return an error if the id is not found', async () => {
+			const res = await request(app).get('/api/v1/palettes/10')
+      const expectedMsg = "{\"error\":\"Couldn't find palette with id: 10\"}"
+
+      expect(res.status).toBe(404)
+      expect(res.text).toBe(expectedMsg)
+		})
 	});
 
 	describe('POST /api/v1/palettes', () => {
@@ -133,24 +141,16 @@ describe('Server', () => {
 
 	describe('PUT /api/v1/palettes/:id', () => {
 		it('should return a 200 status if request has a matching id', async () => {
-			//setup
-			let paletteToUpdate = await database('palettes').first()
-			const id = paletteToUpdate.id
-			const color_1 = 'FFFFFF'
-			paletteToUpdate = {...paletteToUpdate, color_1}
-			//it should declare the id of the request
-			//should declare the body of the request as updated palette
+			let paletteToUpdate = await database('palettes').first();
+			const id = paletteToUpdate.id;
+			const color_1 = 'FFFFFF';
+			paletteToUpdate = {...paletteToUpdate, color_1};
+	
+			const res = await request(app).put(`/api/v1/palettes/${id}`).send(paletteToUpdate);
+			const palette = await database('palettes').where({id}).first();
 
-			//execution 
-			const res = await request(app).put(`/api/v1/palettes/${id}`).send(paletteToUpdate)
-			console.log(res)
-			const palette = await database('palettes').where({id}).first()
-			//should search in the database for a palette with the matching id of the request and update that palette
-
-			//expected 
-			expect(color_1).toEqual(palette.color_1)
-			expect(res.status).toEqual(200)
-			//a 200 status
+			expect(color_1).toEqual(palette.color_1);
+			expect(res.status).toEqual(200);
 		});
 
 			it('should return a 404 status if request has no matching id', () => {
