@@ -1,4 +1,4 @@
-# Palette-Picker-Backend
+# Color-Catcher-Backend
 
 Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
@@ -64,8 +64,8 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 ```
 [  
     {
-    id: 1870,  
-    project_id: 1905,  
+    id: 25,  
+    project_id: 35,  
     color_1: '00FF00',   
     color_2: 'FFFFFF',   
     color_3: '008080',   
@@ -75,8 +75,8 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
     "updated_at": "2019-07-06T18:38:10.378Z"    
     },    
     {  
-    id: 1871,  
-    project_id: 1906,    
+    id: 26,  
+    project_id: 36,    
     color_1: '00FF00',     
     color_2: 'FFFFFF',     
     color_3: '008080',     
@@ -94,13 +94,13 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status OK
 
-#### Link: `http://localhost:3000/api/v1/palettes/1870`
+#### Link: `http://localhost:3000/api/v1/palettes/26`
 
 ```
 [  
     {  
-    "id": 1870,  
-    project_id: 1905,  
+    "id": 26,  
+    project_id: 36,  
     color_1: '00FF00',   
     color_2: 'FFFFFF',   
     color_3: '008080',   
@@ -150,7 +150,17 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 ```
 {   
-"id": 34   
+"id": 38   
+}
+```
+
+#### Response
+
+#### Status 422 unprocessable entity
+
+```
+{
+    "error": "Expected format: { name: <String> } You're missing \"name\" property."
 }
 ```
 
@@ -187,8 +197,70 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 #### Status 201 Created
 
 ```
-{   
-"id": 34   
+{
+    "id": 28
+}
+```
+
+#### Response
+
+#### Status 422 unprocessable entity
+
+```
+{
+    "error": "Expected format: { name: <String> } You're missing \"color_1\" property."
+}
+```
+
+## Project
+
+### PUT /api/v1/project/:id
+
+#### Response 
+
+#### Status 200 OK
+
+#### Link: `http://localhost:3000/api/v1/project/33`
+
+```
+"OK"
+```
+
+#### Response
+
+#### Status 404 Not found
+
+#### Link: `http://localhost:3000/api/v1/project/333`
+
+```
+{
+    "error": "Couldn't update: Project does not exist"
+}
+```
+
+## Palettes
+
+### PUT /api/v1/palettes/:id
+
+#### Response 
+
+#### Status 200 OK
+
+#### Link: `http://localhost:3000/api/v1/palettes/23`
+
+```
+"OK"
+```
+
+#### Response
+
+#### Status 404 Not found
+
+#### Link: `http://localhost:3000/api/v1/palettes/223`
+
+```
+{
+    "error": "Couldn't update: Palette does not exist"
 }
 ```
 
@@ -200,21 +272,47 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 200 OK
 
-#### Link: `http://localhost:3000/api/v1/project/60`
+#### Link: `http://localhost:3000/api/v1/project/33`
 
 ```
-"Deleted palette with id 35"
+"Deleted project with id 33"
 ```
 
 #### Response
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/project/888`
+#### Link: `http://localhost:3000/api/v1/project/335`
 
 ```
-{  
-    "error": "Could not find project with an id: 888"    
+{
+    "error": "Could not find project with id: 335"
+}
+```
+
+## Palettes
+
+### DELETE /api/v1/palettes/:id
+
+#### Response 
+
+#### Status 200 OK
+
+#### Link: `http://localhost:3000/api/v1/palettes/23`
+
+```
+"Deleted palette with id 23"
+```
+
+#### Response
+
+#### Status 404 Not found
+
+#### Link: `http://localhost:3000/api/v1/palettes/253`
+
+```
+{
+    "error": "Could not find palette with id: 253"
 }
 ```
 
