@@ -1,4 +1,4 @@
-const server = require('./server');
+const app = require('./server');
 const request = require('supertest');
 
 const environment = process.env.NODE_ENV || 'test'
@@ -6,10 +6,15 @@ const configuration = require('./knexfile')[environment]
 const database = require('knex')(configuration)
 
 describe('Server', () => {
-	it('should have', () => {
 
+	beforeEach(async () => {
+		await database.seed.run()
 	})
-})
+
+	it('should have', () => {
+		console.log('hello')
+	});
+
 
 //GET /project:
 
@@ -68,112 +73,122 @@ describe('Server', () => {
 	//execution: create var. for response and assign to await request(app).delete(`/project/${id}`), create var for deletedProject and assign to await project DB where({ id: id }).first()
 	//expectation: expect the deletedProject to equal undefined (because it was deleted)
 
-describe('GET /api/v1/palettes', () {
-	it('should return all palettes', () => {
-		//set up 
-		// it should declare expectedPalettes with the palettes database
+	describe('GET /api/v1/palettes', () => {
+		it('should return all palettes', async () => {
+	// 		//set up 
+	// 		// it should declare expectedPalettes with the palettes database
 
-		//execution
-		//should declare the response with palettes
-		//all the palettes with be the response body
+		const expectedPalettes = await database('palettes').select()
+		expectedPalettes.forEach(palette => {
+				palette.created_at = palette.created_at.toJSON()
+				palette.updated_at = palette.updated_at.toJSON()
+		})
+		// 	//execution
+		// 	//should declare the response with palettes
+	const res = await request(app).get('/api/v1/palettes')
+		// 	//all the palettes with be the response body
+ 	const palettes = res.body
 
-		//expectation
-		//expected palettes to equal expectedPalettes
-	})
-})
+		// 	//expectation
+		// 	//expected palettes to equal expectedPalettes
 
-describe('GET /api/v1/palettes:id', () {
-	it('should return a palette with an id that matches the params id', () => {
-		//set up 
-		// it should grab the first palette from the database
-		//the id should = the palette id
+		expect(palettes).toEqual(expectedPalettes)
+	 });
+	});
 
-		//execution
-		//should declare the palettes 
-		//declare result should take the first palette from the response body
+	describe('GET /api/v1/palettes:id', () => {
+		it('should return a palette with an id that matches the params id', () => {
+			//set up 
+			// it should grab the first palette from the database
+			//the id should = the palette id
 
-		//expectation
-		//expected the result to be the palette with th matching id of the palette 
+			//execution
+			//should declare the palettes 
+			//declare result should take the first palette from the response body
+
+			//expectation
+			//expected the result to be the palette with th matching id of the palette 
+		});
+	});
+
+	describe('POST /api/v1/palettes', () => {
+		it('should post a palette to the palettes database', () => {
+			//setup
+			//it should declare the palette
+
+			//execution 
+			//result should be declared with the palette posted
+			//palettes should be declared as all the palettes in the database
+
+			//expected 
+			//a 200 reponse
+			//the palette color to be the same as the new palette
+		});
+
+			it('should return an error if a not all required parameters are met', () => {
+			//setup
+			//it should declare the palette
+
+			//execution 
+			//result should be declared with the palette posted
+			//palettes should be declared as all the palettes in the database
+
+			//expected 
+			//an error status 
+			//a error message
+			//error: 
+	    //      `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.
+		});
+	});
+
+	describe('PUT /api/v1/palettes/:id', () => {
+		it('should return a 200 status if request has a matching id', () => {
+			//setup
+			//it should declare the id of the request
+			//should declare the body of the request as updated palette
+
+			//execution 
+			//should search in the database for a palette with the matching id of the request and update that palette
+
+			//expected 
+			//a 200 status
+		});
+
+			it('should return a 404 status if request has no matching id', () => {
+			//setup
+			//it should declare the id of the request
+			//should declare the body of the request as updated palette
+
+			//execution 
+			//should search the database for a matching id
+
+			//expected 
+			//a 404 status will be returned with an error message
+		});
+	});
+
+	describe('DELETE /api/v1/palettes/:id', () => {
+		it('should return a 200 status with a deleted message', () => {
+			//setup
+			//it should declare the id of the request
+
+			//execution 
+			//should search the database for a matching id
+
+			//expected 
+			//a 200 status will be returned with a message telling you which palette was deleted
+		});
+
+			it('should return a 404 status with an error message', () => {
+			//setup
+			//it should declare the id of the request
+
+			//execution 
+			//should search the database for a matching id
+
+			//expected 
+			//a 404 status will be returned with an error message
+		});
 	});
 });
-
-describe('POST /api/v1/palettes', () {
-	it('should post a palette to the palettes database', () {
-		//setup
-		//it should declare the palette
-
-		//execution 
-		//result should be declared with the palette posted
-		//palettes should be declared as all the palettes in the database
-
-		//expected 
-		//a 200 reponse
-		//the palette color to be the same as the new palette
-	});
-
-		it('should return an error if a not all required parameters are met', () {
-		//setup
-		//it should declare the palette
-
-		//execution 
-		//result should be declared with the palette posted
-		//palettes should be declared as all the palettes in the database
-
-		//expected 
-		//an error status 
-		//a error message
-		//error: 
-    //      `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.
-	});
-});
-
-describe('PUT /api/v1/palettes/:id', () => {
-	it('should return a 200 status if request has a matching id', () {
-		//setup
-		//it should declare the id of the request
-		//should declare the body of the request as updated palette
-
-		//execution 
-		//should search in the database for a palette with the matching id of the request and update that palette
-
-		//expected 
-		//a 200 status
-	});
-
-		it('should return a 404 status if request has no matching id', () {
-		//setup
-		//it should declare the id of the request
-		//should declare the body of the request as updated palette
-
-		//execution 
-		//should search the database for a matching id
-
-		//expected 
-		//a 404 status will be returned with an error message
-	});
-});
-
-describe('DELETE /api/v1/palettes/:id', () => {
-	it('should return a 200 status with a deleted message', () {
-		//setup
-		//it should declare the id of the request
-
-		//execution 
-		//should search the database for a matching id
-
-		//expected 
-		//a 200 status will be returned with a message telling you which palette was deleted
-	}
-	
-		it('should return a 404 status with an error message', () {
-		//setup
-		//it should declare the id of the request
-
-		//execution 
-		//should search the database for a matching id
-
-		//expected 
-		//a 404 status will be returned with an error message
-	})
-})
 	

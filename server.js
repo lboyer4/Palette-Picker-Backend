@@ -35,9 +35,9 @@ app.get('/api/v1/project', (request, response) => {
 //get endpoint for ALL resources on palettes table
 
 app.get('/api/v1/palettes', (request, response) => {
-  .then(palette => {
-    return response.status(200).json(palette);
   database('palettes').select()
+   .then(palette => {
+    return response.status(200).json(palette);
   })
   .catch(error => {
     return response.status(500).json({ error })
@@ -196,5 +196,7 @@ app.delete('/api/v1/project/:id', (request, response) => {
       response.status(500).json({ error })
     });
  });
+
+module.exports = app
 
 
