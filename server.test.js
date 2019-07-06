@@ -132,15 +132,24 @@ describe('Server', () => {
 	});
 
 	describe('PUT /api/v1/palettes/:id', () => {
-		it('should return a 200 status if request has a matching id', () => {
+		it('should return a 200 status if request has a matching id', async () => {
 			//setup
+			let paletteToUpdate = await database('palettes').first()
+			const id = paletteToUpdate.id
+			const color_1 = 'FFFFFF'
+			paletteToUpdate = {...paletteToUpdate, color_1}
 			//it should declare the id of the request
 			//should declare the body of the request as updated palette
 
 			//execution 
+			const res = await request(app).put(`/api/v1/palettes/${id}`).send(paletteToUpdate)
+			console.log(res)
+			const palette = await database('palettes').where({id}).first()
 			//should search in the database for a palette with the matching id of the request and update that palette
 
 			//expected 
+			expect(color_1).toEqual(palette.color_1)
+			expect(res.status).toEqual(200)
 			//a 200 status
 		});
 
