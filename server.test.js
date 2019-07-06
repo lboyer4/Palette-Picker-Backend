@@ -90,42 +90,29 @@ describe('Server', () => {
 
 	describe('GET /api/v1/palettes:id', () => {
 		it('should return a palette with an id that matches the params id', async () => {
-			//set up 
-			const expectedPalette = await database('palettes').first()
+			const expectedPalette = await database('palettes').first();
 			expectedPalette.created_at = expectedPalette.created_at.toJSON();
 			expectedPalette.updated_at = expectedPalette.updated_at.toJSON();
-			const id = expectedPalette.id
 
-			// it should grab the first palette from the database
-			//the id should = the palette id
-
-			//execution
+			const id = expectedPalette.id;
 			const res = await request(app).get(`/api/v1/palettes/${id}`);
-			const palette = res.body[0]
+			const palette = res.body[0];
 
-
-			//should declare the palettes 
-			//declare result should take the first palette from the response body
-
-			//expectation
-
-			expect(palette).toEqual(expectedPalette)
-			//expected the result to be the palette with th matching id of the palette 
+			expect(palette).toEqual(expectedPalette);
 		});
 	});
 
 	describe('POST /api/v1/palettes', () => {
-		it('should post a palette to the palettes database', () => {
+		it('should post a palette to the palettes database', async () => {
 			//setup
-			//it should declare the palette
+			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF"}
 
-			//execution 
-			//result should be declared with the palette posted
-			//palettes should be declared as all the palettes in the database
-
-			//expected 
-			//a 200 reponse
-			//the palette color to be the same as the new palette
+			const response = await request(app).post('/api/v1/palettes').send(newPalette)
+			const id = response.body.id;
+			const palette = await database('palettes').where({ id }).first();
+			
+			expect(palette.color_1).toEqual(newPalette.color_1);
+			expect(response.status).toEqual(201);
 		});
 
 			it('should return an error if a not all required parameters are met', () => {
