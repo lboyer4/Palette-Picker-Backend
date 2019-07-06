@@ -102,12 +102,12 @@ describe('Server', () => {
 		});
 
 		it('should return an error if the id is not found', async () => {
-			const res = await request(app).get('/api/v1/palettes/10')
-      const expectedMsg = "{\"error\":\"Couldn't find palette with id: 10\"}"
+			const res = await request(app).get('/api/v1/palettes/10');
+      const expectedMsg = "{\"error\":\"Couldn't find palette with id: 10\"}";
 
-      expect(res.status).toBe(404)
-      expect(res.text).toBe(expectedMsg)
-		})
+      expect(res.status).toBe(404);
+      expect(res.text).toBe(expectedMsg);
+		});
 	});
 
 	describe('POST /api/v1/palettes', () => {
@@ -123,19 +123,13 @@ describe('Server', () => {
 			expect(response.status).toEqual(201);
 		});
 
-			it('should return an error if a not all required parameters are met', () => {
-			//setup
-			//it should declare the palette
+			it('should return an error if a not all required parameters are met', async () => {
+			const palette = await database('palettes').first();
+			const newPalette = {color_1: ''};
 
-			//execution 
-			//result should be declared with the palette posted
-			//palettes should be declared as all the palettes in the database
+			const res = await request(app).post('/api/v1/palettes').send();
 
-			//expected 
-			//an error status 
-			//a error message
-			//error: 
-	    //      `Expected format: { name: <String> } You're missing "${ requiredParameter }" property.
+			expect(res.status).toBe(422);
 		});
 	});
 
