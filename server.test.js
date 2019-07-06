@@ -75,38 +75,41 @@ describe('Server', () => {
 
 	describe('GET /api/v1/palettes', () => {
 		it('should return all palettes', async () => {
-	// 		//set up 
-	// 		// it should declare expectedPalettes with the palettes database
+			const expectedPalettes = await database('palettes').select();
 
-		const expectedPalettes = await database('palettes').select()
-		expectedPalettes.forEach(palette => {
-				palette.created_at = palette.created_at.toJSON()
-				palette.updated_at = palette.updated_at.toJSON()
-		})
-		// 	//execution
-		// 	//should declare the response with palettes
-	const res = await request(app).get('/api/v1/palettes')
-		// 	//all the palettes with be the response body
- 	const palettes = res.body
+			expectedPalettes.forEach(palette => {
+				palette.created_at = palette.created_at.toJSON();
+				palette.updated_at = palette.updated_at.toJSON();
+			});
+			const res = await request(app).get('/api/v1/palettes');
+	 		const palettes = res.body;
 
-		// 	//expectation
-		// 	//expected palettes to equal expectedPalettes
-
-		expect(palettes).toEqual(expectedPalettes)
-	 });
+			expect(palettes).toEqual(expectedPalettes);
+	 	});
 	});
 
 	describe('GET /api/v1/palettes:id', () => {
-		it('should return a palette with an id that matches the params id', () => {
+		it('should return a palette with an id that matches the params id', async () => {
 			//set up 
+			const expectedPalette = await database('palettes').first()
+			expectedPalette.created_at = expectedPalette.created_at.toJSON();
+			expectedPalette.updated_at = expectedPalette.updated_at.toJSON();
+			const id = expectedPalette.id
+
 			// it should grab the first palette from the database
 			//the id should = the palette id
 
 			//execution
+			const res = await request(app).get(`/api/v1/palettes/${id}`);
+			const palette = res.body[0]
+
+
 			//should declare the palettes 
 			//declare result should take the first palette from the response body
 
 			//expectation
+
+			expect(palette).toEqual(expectedPalette)
 			//expected the result to be the palette with th matching id of the palette 
 		});
 	});
