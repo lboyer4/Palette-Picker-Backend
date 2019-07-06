@@ -150,44 +150,31 @@ describe('Server', () => {
 			it('should return a 404 status if request has no matching id', async () => {
 				let paletteToUpdate = await database('palettes').first();
 	
-				const res = await request(app).put('/api/v1/palettes/10').send(paletteToUpdate)
-				const expectedMsg = "{\"error\":\"Couldn't update: Palette does not exist\"}"
+				const res = await request(app).put('/api/v1/palettes/10').send(paletteToUpdate);
+				const expectedMsg = "{\"error\":\"Couldn't update: Palette does not exist\"}";
 
 				expect(res.status).toEqual(404);
-				expect(res.text).toBe(expectedMsg)
-			//setup
-			//it should declare the id of the request
-			//should declare the body of the request as updated palette
-
-			//execution 
-			//should search the database for a matching id
-
-			//expected 
-			//a 404 status will be returned with an error message
+				expect(res.text).toBe(expectedMsg);
 		});
 	});
 
 	describe('DELETE /api/v1/palettes/:id', () => {
-		it('should return a 200 status with a deleted message', () => {
-			//setup
-			//it should declare the id of the request
+		it('should return a 200 status with a deleted message', async () => {
+			const palettes = await database('palettes').select();
+			const expected = await database('palettes').first();
+			await request(app).delete(`/api/v1/palettes/${expected.id}`);
 
-			//execution 
-			//should search the database for a matching id
+			const updatedPalettes = await database('palettes').select();
 
-			//expected 
-			//a 200 status will be returned with a message telling you which palette was deleted
+			expect(updatedPalettes.length).toBe(palettes.length -1);
 		});
 
-			it('should return a 404 status with an error message', () => {
-			//setup
-			//it should declare the id of the request
+			it('should return a 404 status with an error message', async () => {
+			const res = await request(app).delete('/api/v1/palettes/10');
+			const expectedMsg = "{\"error\":\"Could not find palette with id: 10\"}";
 
-			//execution 
-			//should search the database for a matching id
-
-			//expected 
-			//a 404 status will be returned with an error message
+			expect(res.status).toBe(404);
+			expect(res.text).toBe(expectedMsg);
 		});
 	});
 });
