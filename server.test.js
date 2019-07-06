@@ -115,12 +115,12 @@ describe('Server', () => {
 			//setup
 			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF"}
 
-			const response = await request(app).post('/api/v1/palettes').send(newPalette)
-			const id = response.body.id;
+			const res = await request(app).post('/api/v1/palettes').send(newPalette)
+			const id = res.body.id;
 			const palette = await database('palettes').where({ id }).first();
 			
 			expect(palette.color_1).toEqual(newPalette.color_1);
-			expect(response.status).toEqual(201);
+			expect(res.status).toEqual(201);
 		});
 
 			it('should return an error if a not all required parameters are met', async () => {
@@ -147,7 +147,14 @@ describe('Server', () => {
 			expect(res.status).toEqual(200);
 		});
 
-			it('should return a 404 status if request has no matching id', () => {
+			it('should return a 404 status if request has no matching id', async () => {
+				let paletteToUpdate = await database('palettes').first();
+	
+				const res = await request(app).put('/api/v1/palettes/10').send(paletteToUpdate)
+				const expectedMsg = "{\"error\":\"Couldn't update: Palette does not exist\"}"
+
+				expect(res.status).toEqual(404);
+				expect(res.text).toBe(expectedMsg)
 			//setup
 			//it should declare the id of the request
 			//should declare the body of the request as updated palette
