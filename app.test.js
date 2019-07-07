@@ -174,6 +174,18 @@ describe('Server', () => {
 			expect(palette).toEqual(expectedPalette);
 		});
 
+		it('should include palettes project if query string is set to included', async () => {
+
+      const response = await request(app).get('/api/v1/palettes?project=included');
+      const palette = response.body[0];
+
+			expect(palette).toHaveProperty('color_1');    
+			expect(palette).toHaveProperty('color_2');    
+			expect(palette).toHaveProperty('color_3');    
+			expect(palette).toHaveProperty('color_4');    
+			expect(palette).toHaveProperty('color_5');     
+    });
+
 		it('should return an error if the id is not found', async () => {
 			const response = await request(app).get('/api/v1/palettes/10');
       const expectedMsg = "{\"error\":\"Couldn't find palette with id: 10\"}";
