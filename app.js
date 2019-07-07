@@ -44,6 +44,18 @@ app.get('/api/v1/palettes', async (request, response) => {
   })
 });
 
+//get for custom API endpoint
+
+// app.get('/api/v1/project', async (request, response) => {
+//   const { palettes } = request.query;
+//   if(palettes === 'included') {
+//     response.status(200).json(request.query)
+//   } else {
+//     database('project').select()
+//     .then(project => response.status(200).json(project))
+//   }
+// })
+
 //get for single projects /project/:id
 
 app.get('/api/v1/project/:id', async (request, response) => {
@@ -64,10 +76,18 @@ app.get('/api/v1/project/:id', async (request, response) => {
 //get for single palette /palettes/:id
 
 app.get('/api/v1/palettes/:id', (request, response) => {
+  const { project } = request.query;
   database('palettes').where('id', request.params.id).select()
   .then(palette => {
     if(palette.length) {
-      return response.status(200).json(palette);
+        if(project === 'included') {
+          database('project').where('id', palette[0].project_id).then(project => {
+            palette[0].project_name = project[0].name
+            return response.status(200).json(palette);
+          })
+        } else {
+          return response.status(200).json(palette);
+        }
     } else {
       return response.status(404).json({ error: `Couldn't find palette with id: ${request.params.id }`});
     }
@@ -104,7 +124,7 @@ app.post('/api/v1/project', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body
-  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5']) {
+  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id']) {
     if (!palette[requiredParameter]) {
       return response
         .status(422)
