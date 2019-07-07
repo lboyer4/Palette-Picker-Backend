@@ -18,6 +18,7 @@ describe('Server', () => {
 	beforeEach(async () => {
 		await database.seed.run()
 	});
+
 	describe('init', () => {
 		it('should return a 200 status', async () => {
 			const response = await request(app).get('/')
@@ -153,8 +154,8 @@ describe('Server', () => {
 				palette.created_at = palette.created_at.toJSON();
 				palette.updated_at = palette.updated_at.toJSON();
 			});
-			const res = await request(app).get('/api/v1/palettes');
-	 		const palettes = res.body;
+			const response = await request(app).get('/api/v1/palettes');
+	 		const palettes = response.body;
 
 			expect(palettes).toEqual(expectedPalettes);
 	 	});
@@ -167,41 +168,40 @@ describe('Server', () => {
 			expectedPalette.updated_at = expectedPalette.updated_at.toJSON();
 
 			const id = expectedPalette.id;
-			const res = await request(app).get(`/api/v1/palettes/${id}`);
-			const palette = res.body[0];
+			const response = await request(app).get(`/api/v1/palettes/${id}`);
+			const palette = response.body[0];
 
 			expect(palette).toEqual(expectedPalette);
 		});
 
 		it('should return an error if the id is not found', async () => {
-			const res = await request(app).get('/api/v1/palettes/10');
+			const response = await request(app).get('/api/v1/palettes/10');
       const expectedMsg = "{\"error\":\"Couldn't find palette with id: 10\"}";
 
-      expect(res.status).toBe(404);
-      expect(res.text).toBe(expectedMsg);
+      expect(response.status).toBe(404);
+      expect(response.text).toBe(expectedMsg);
 		});
 	});
 
 	describe('POST /api/v1/palettes', () => {
 		it('should post a palette to the palettes database', async () => {
-			//setup
-			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF"}
+			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF", "project_id": 3}
 
-			const res = await request(app).post('/api/v1/palettes').send(newPalette)
-			const id = res.body.id;
+			const response = await request(app).post('/api/v1/palettes').send(newPalette)
+			const id = response.body.id;
 			const palette = await database('palettes').where({ id }).first();
 			
 			expect(palette.color_1).toEqual(newPalette.color_1);
-			expect(res.status).toEqual(201);
+			expect(response.status).toEqual(201);
 		});
 
-			it('should return an error if a not all required parameters are met', async () => {
+			it('should return an error if not all required parameters are met', async () => {
 			const palette = await database('palettes').first();
 			const newPalette = {color_1: ''};
 
-			const res = await request(app).post('/api/v1/palettes').send();
+			const response = await request(app).post('/api/v1/palettes').send();
 
-			expect(res.status).toBe(422);
+			expect(response.status).toBe(422);
 		});
 	});
 
@@ -212,21 +212,21 @@ describe('Server', () => {
 			const color_1 = 'FFFFFF';
 			paletteToUpdate = {...paletteToUpdate, color_1};
 	
-			const res = await request(app).put(`/api/v1/palettes/${id}`).send(paletteToUpdate);
+			const response = await request(app).put(`/api/v1/palettes/${id}`).send(paletteToUpdate);
 			const palette = await database('palettes').where({id}).first();
 
 			expect(color_1).toEqual(palette.color_1);
-			expect(res.status).toEqual(200);
+			expect(response.status).toEqual(200);
 		});
 
 			it('should return a 404 status if request has no matching id', async () => {
 				let paletteToUpdate = await database('palettes').first();
 	
-				const res = await request(app).put('/api/v1/palettes/10').send(paletteToUpdate);
+				const response = await request(app).put('/api/v1/palettes/10').send(paletteToUpdate);
 				const expectedMsg = "{\"error\":\"Couldn't update: Palette does not exist\"}";
 
-				expect(res.status).toEqual(404);
-				expect(res.text).toBe(expectedMsg);
+				expect(response.status).toEqual(404);
+				expect(response.text).toBe(expectedMsg);
 		});
 	});
 
@@ -242,11 +242,11 @@ describe('Server', () => {
 		});
 
 			it('should return a 404 status with an error message', async () => {
-			const res = await request(app).delete('/api/v1/palettes/10');
+			const response = await request(app).delete('/api/v1/palettes/10');
 			const expectedMsg = "{\"error\":\"Could not find palette with id: 10\"}";
 
-			expect(res.status).toBe(404);
-			expect(res.text).toBe(expectedMsg);
+			expect(response.status).toBe(404);
+			expect(response.text).toBe(expectedMsg);
 		});
 	});
 });
