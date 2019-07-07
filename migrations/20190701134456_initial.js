@@ -17,7 +17,7 @@ exports.up = function(knex) {
 			table.string('color_5');
 			table.integer('project_id').unsigned()
 			table.foreign('project_id')
-				.references('project');
+				.references('project.id');
 
 			table.timestamps(true, true);
 		})
