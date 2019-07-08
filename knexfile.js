@@ -16,12 +16,12 @@ module.exports = {
 
   test: {
     client: 'pg',
-    connection: 'postgres://localhost/project_test',
+    connection: 'postgres://localhost/palettepicker_test',
     migrations: {
       directory: './migrations'
     },
     seeds: {
-      directory: './seeds'
+      directory: './seeds/test'
     },
     useNullAsDefault: true,
   },

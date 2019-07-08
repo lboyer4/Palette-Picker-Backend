@@ -4,7 +4,7 @@ node_js:
 services:
   - postgresql
 before_script:
-  - psql -c 'create database palettepicker;' -U postgres
-  - psql -c 'CREATE DATABASE project_test;' -U postgres
+  - psql -c 'CREATE DATABASE palettepicker_test;' -U postgres
+  # - psql -c 'CREATE DATABASE project_test;' -U postgres
   - knex migrate:latest --env=test
   - knex seed:run --env=test
