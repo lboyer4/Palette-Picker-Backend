@@ -9,15 +9,12 @@ app.use(cors());
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
-// app.use(express.json());
-// require('dotenv').config();
-
 app.set('port', process.env.PORT || 3001);
 
 app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
 
-app.get('/', function(req, res) {
-  res.status(200).json('hello')
+app.get('/', (request, response) => {
+  response.status(200).json('hello')
 });
 
 //get endpoint for ALL resources on project table
@@ -73,7 +70,7 @@ app.get('/api/v1/project/:id', async (request, response) => {
   })
 });
 
-//get for single palette /palettes/:id
+//get for single palette /palettes/:id and for custom API endpoint
 
 app.get('/api/v1/palettes/:id', (request, response) => {
   const { project } = request.query;
