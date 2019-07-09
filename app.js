@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 3001);
 
-app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
+// app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
 
 app.get('/', (request, response) => {
   response.status(200).json('hello')
@@ -121,7 +121,7 @@ app.post('/api/v1/project', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body
-  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id']) {
+  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id', 'name']) {
     if (!palette[requiredParameter]) {
       return response
         .status(422)
@@ -199,15 +199,18 @@ app.delete('/api/v1/palettes/:id', (request, response) => {
  //DELETE a project
 
 app.delete('/api/v1/project/:id', (request, response) => {
-  database('project').where('id', request.params.id).del()
-    .then(result => {
-      if (result > 0) {
-        response.status(200).json(`Deleted project ${request.body.project} with id ${request.params.id}`)
-      } else {
-        response.status(404).json({
-          error: `Could not find project with id: ${request.params.id}`
+  database('palettes').where('project_id', request.params.id).del()
+    .then(() => {
+      database('project').where('id', request.params.id).del()
+        .then(result => {
+          if (result > 0) {
+            response.status(200).json(`Deleted project ${request.body.project} with id ${request.params.id}`)
+          } else {
+            response.status(404).json({
+              error: `Could not find project with id: ${request.params.id}`
+            })
+          }
         })
-      }
     })
     .catch(error => {
       response.status(500).json({ error })
