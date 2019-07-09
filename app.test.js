@@ -126,7 +126,6 @@ describe('Server', () => {
 	
 	describe('DELETE /api/v1/project/:id', () => {
 		it('should delete a project using the id', async () => {
-			await database.seed.run()
 			const project = await database('project').first();
 			const projectToDelete = project.id
 			
