@@ -197,13 +197,13 @@ describe('Server', () => {
 
 	describe('POST /api/v1/palettes', () => {
 		it('should post a palette to the palettes database', async () => {
-			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF", "project_id": 3}
+			const project = await database('project').first()
+			const newPalette = {"color_1": "FFFFFF", "color_2": "FFFFFF", "color_3": "888888", "color_4": "000000", "color_5": "00FFFF", "project_id": project.id, "name": "project one"}
 
 			const response = await request(app).post('/api/v1/palettes').send(newPalette)
-			const id = response.body.id;
-			const palette = await database('palettes').where({ id }).first();
-			
-			expect(palette.color_1).toEqual(newPalette.color_1);
+			console.log('response-body', response.body)
+			const palette = await database('palettes').where('id', response.body.id);
+			expect(palette[0].color_1).toEqual(newPalette.color_1);
 			expect(response.status).toEqual(201);
 		});
 

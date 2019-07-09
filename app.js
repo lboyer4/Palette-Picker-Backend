@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 3001);
 
-app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
+// app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
 
 app.get('/', (request, response) => {
   response.status(200).json('hello')
@@ -121,7 +121,7 @@ app.post('/api/v1/project', (request, response) => {
 
 app.post('/api/v1/palettes', (request, response) => {
   let palette = request.body
-  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id']) {
+  for (let requiredParameter of ['color_1', 'color_2', 'color_3', 'color_4', 'color_5', 'project_id', 'name']) {
     if (!palette[requiredParameter]) {
       return response
         .status(422)
