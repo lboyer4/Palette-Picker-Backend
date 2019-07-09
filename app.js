@@ -11,8 +11,6 @@ app.use(bodyParser.json());
 
 app.set('port', process.env.PORT || 3001);
 
-// app.listen(app.get('port'), () => console.log(`App is running 😃 on port ${app.get('port')}`));
-
 app.get('/', (request, response) => {
   response.status(200).json('hello')
 });
@@ -40,18 +38,6 @@ app.get('/api/v1/palettes', async (request, response) => {
     return response.status(500).json({ error })
   })
 });
-
-//get for custom API endpoint
-
-// app.get('/api/v1/project', async (request, response) => {
-//   const { palettes } = request.query;
-//   if(palettes === 'included') {
-//     response.status(200).json(request.query)
-//   } else {
-//     database('project').select()
-//     .then(project => response.status(200).json(project))
-//   }
-// })
 
 //get for single projects /project/:id
 
