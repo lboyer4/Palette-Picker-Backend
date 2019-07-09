@@ -28,8 +28,7 @@ const createProject = (knex, project) => {
 
     project.palettes.forEach(palette => {
       palettePromises.push(
-        createPalette(knex, {...palette, project_id: projectId[0] }
-        })
+        createPalette(knex, {...palette, project_id: projectId[0]})
       )
     });
 
