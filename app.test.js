@@ -26,8 +26,6 @@ describe('Server', () => {
 		})
 	})
 
-	//GET /project:
-
 	describe('GET /api/v1/project', () => {
 		it('should return all projects in the db project table if they exist', async () => {
 			const expectedProject = await database('project').select().then(proj => convertDate(proj));
@@ -39,8 +37,6 @@ describe('Server', () => {
 			expect(result).toEqual(expectedProject);
     });
 	});
-
-	//GET /project/:id:
 
 		describe('GET /api/v1/project/:id', () => {
 			it('should return a single project with the id in the params', async () => {
@@ -66,8 +62,6 @@ describe('Server', () => {
 			expect(response.status).toBe(404);
 		});
 	});
-	
-	//POST /project:
 	
 	describe('POST /api/v1/project/', () => {
 		it('should post a new project to the DB', async () => {
@@ -95,8 +89,6 @@ describe('Server', () => {
 		});
 	})
 
-	//PUT /project/:id:
-
 	describe('PUT /api/v1/project/:id', () => {
 		it('should update the current project with new information', async () => {
 			let updatedProject = await database('project').first()
@@ -121,8 +113,6 @@ describe('Server', () => {
 			expect(response.body).toEqual(error);
 		});
 	})
-	
-	//DELETE /project/:id:
 	
 	describe('DELETE /api/v1/project/:id', () => {
 		it('should delete a project using the id', async () => {
