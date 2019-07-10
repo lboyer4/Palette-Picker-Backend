@@ -10,7 +10,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status OK
 
-#### Link: `http://localhost:3000/api/v1/project`
+#### Link: `http://localhost:3001/api/v1/project`
 
 ```
 [  
@@ -37,7 +37,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status OK
 
-#### Link: `http://localhost:3000/api/v1/project/1`
+#### Link: `http://localhost:3001/api/v1/project/1`
 
 ```
 [
@@ -59,7 +59,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status OK
 
-#### Link: `http://localhost:3000/api/v1/palettes`
+#### Link: `http://localhost:3001/api/v1/palettes`
 
 ```
 [  
@@ -94,7 +94,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status OK
 
-#### Link: `http://localhost:3000/api/v1/palettes/26`
+#### Link: `http://localhost:3001/api/v1/palettes/26`
 
 ```
 [  
@@ -116,11 +116,49 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/palettes/999`
+#### Link: `http://localhost:3001/api/v1/palettes/999`
 
 ```
-{  
-    "error": "Couldn't find project with id: 999"  
+{
+    "error": "Couldn't find palette with id: 999"
+}
+```
+
+### GET /api/v1/palettes/:id?project=included
+
+#### Response
+
+#### Status OK
+
+#### Link: `http://localhost:3001/api/v1/palettes/62?project=included`
+
+```
+[
+    {
+        "id": 62,
+        "name": "new",
+        "color_1": "6ACE3D",
+        "color_2": "7E394E",
+        "color_3": "CCA80A",
+        "color_4": "5B232E",
+        "color_5": "DFC8C0",
+        "project_id": 26,
+        "created_at": "2019-07-10T01:41:47.817Z",
+        "updated_at": "2019-07-10T01:41:47.817Z",
+        "project_name": "asfgasd"
+    }
+]
+```
+
+#### Response
+
+#### Status 404 Not found
+
+#### Link: `http://localhost:3001/api/v1/palettes/2?project=included`
+
+```
+{
+    "error": "Couldn't find palette with id: 2"
 }
 ```
 
@@ -128,7 +166,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 ### POST /api/v1/project
 
-#### Link: `http://localhost:3000/api/v1/project`
+#### Link: `http://localhost:3001/api/v1/project`
 
 #### Required Parameters:
 
@@ -168,7 +206,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 ### POST /api/v1/palettes
 
-#### Link: `http://localhost:3000/api/v1/palettes`
+#### Link: `http://localhost:3001/api/v1/palettes`
 
 #### Required Parameters:
 
@@ -220,7 +258,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 200 OK
 
-#### Link: `http://localhost:3000/api/v1/project/33`
+#### Link: `http://localhost:3001/api/v1/project/33`
 
 ```
 "OK"
@@ -230,7 +268,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/project/333`
+#### Link: `http://localhost:3001/api/v1/project/333`
 
 ```
 {
@@ -246,7 +284,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 200 OK
 
-#### Link: `http://localhost:3000/api/v1/palettes/23`
+#### Link: `http://localhost:3001/api/v1/palettes/23`
 
 ```
 "OK"
@@ -256,7 +294,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/palettes/223`
+#### Link: `http://localhost:3001/api/v1/palettes/223`
 
 ```
 {
@@ -272,7 +310,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 200 OK
 
-#### Link: `http://localhost:3000/api/v1/project/33`
+#### Link: `http://localhost:3001/api/v1/project/33`
 
 ```
 "Deleted project with id 33"
@@ -282,7 +320,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/project/335`
+#### Link: `http://localhost:3001/api/v1/project/335`
 
 ```
 {
@@ -298,7 +336,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 200 OK
 
-#### Link: `http://localhost:3000/api/v1/palettes/23`
+#### Link: `http://localhost:3001/api/v1/palettes/23`
 
 ```
 "Deleted palette with id 23"
@@ -308,7 +346,7 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
 #### Status 404 Not found
 
-#### Link: `http://localhost:3000/api/v1/palettes/253`
+#### Link: `http://localhost:3001/api/v1/palettes/253`
 
 ```
 {
