@@ -372,9 +372,7 @@ The goals of this project's frontend was to create an App that generates random 
 
 The goals of this project's backend was to get comfortable using Express and Node.js, and to implement Travis CI.
 
+## Contributors
+[Lauren Boyer](https://github.com/lboyer4)
 
-
-
-   
-
-
+[Sally Haefling](https://github.com/SallyHaefling)
