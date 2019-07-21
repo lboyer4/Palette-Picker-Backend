@@ -1,6 +1,19 @@
 # Color-Catcher-Backend
 
+## Description
+
+Color Catcher Backend is the backend of the Color Catcher Frontend project. It is a partner project in mod4 of Turing, that gave us practice using Node, Express, Postgres, and Postico
+You can view the frontend repo [here](https://github.com/lboyer4/color-catcher-frontend.git)
+
 Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
+
+## Installation
+  #### 1. Clone down this repo and cd in to it
+  ```git clone https://github.com/lboyer4/color-catcher-backend.git```
+  #### 2. Run npm install
+ ```npm install```
+ #### 3. Start server
+```npm start```
 
 ## Project
 
