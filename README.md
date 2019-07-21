@@ -3,7 +3,7 @@
 ## Description
 
 Color Catcher Backend is the backend of the Color Catcher Frontend project. It is a partner project in mod4 of Turing, that gave us practice using Node, Express, Postgres, and Postico
-You can view the frontend repo [here](https://github.com/lboyer4/color-catcher-frontend.git)
+You can view the frontend repo [here](https://github.com/lboyer4/color-catcher-frontend.git).
 
 Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 
@@ -367,6 +367,10 @@ Heroku deployment: [color-catcher-backend](https://colorcatcher.herokuapp.com/)
 }
 ```
 
+## Goals
+The goals of this project's frontend was to create an App that generates random colors, allows you to "freeze" colors, and save projects and palettes to the backend. It uses ReactJS, Redux, Enzyme, and Jest.
+
+The goals of this project's backend was to get comfortable using Express and Node.js, and to implement Travis CI.
 
 
 
